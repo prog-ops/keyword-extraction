@@ -1,11 +1,24 @@
 import {useState} from "react";
-import {Button, Textarea} from "@chakra-ui/react";
+import {Button, Textarea, useToast} from "@chakra-ui/react";
 
-const Input = () => {
+const Input = ({ extract }) => {
   const [text, setText] = useState('');
 
+  const toast = useToast()
+
   const submit = () => {
-    console.log(text)
+    if (text === '') {
+      toast({
+        title: 'Kolom teks tidak boleh kosong',
+        description: 'Ketik atau paste teks untuk mengekstrak keywords',
+        status: 'error',
+        duration: 4_000,
+        isClosable: false,
+      });
+    } else {
+      extract(text)
+      console.log(text)
+    }
   }
 
   return (
