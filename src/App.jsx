@@ -1,4 +1,6 @@
 import {Container, Box} from '@chakra-ui/react'
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
 
 const App = () => {
   return (
@@ -9,7 +11,8 @@ const App = () => {
           paddingTop={130}
       >
         <Container maxW='3xl' centerContent>
-          <h1>Keyword Extraction App</h1>
+          <Header/>
+          <Footer/>
         </Container>
       </Box>
   )
