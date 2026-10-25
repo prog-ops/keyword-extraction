@@ -1,5 +1,4 @@
-import {Box, Flex, Image, Text} from "@chakra-ui/react";
-import icon from '../assets/openai.svg'
+import {Box, Flex, Text} from "@chakra-ui/react";
 
 const Footer = () => {
   return (
