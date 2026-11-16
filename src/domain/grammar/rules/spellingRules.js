@@ -1,0 +1,173 @@
+import { matchCase } from '@/domain/grammar/grammarTypes'
+
+/**
+ * Dictionary of common English spelling mistakes mapped to their correct forms.
+ */
+export const SPELLING_DICTIONARY = Object.freeze({
+  accomodate: 'accommodate',
+  accomodation: 'accommodation',
+  acheive: 'achieve',
+  acheived: 'achieved',
+  accross: 'across',
+  agressive: 'aggressive',
+  apparantly: 'apparently',
+  appearence: 'appearance',
+  arguement: 'argument',
+  arguements: 'arguments',
+  assasin: 'assassin',
+  basicly: 'basically',
+  becuase: 'because',
+  beacuse: 'because',
+  becasue: 'because',
+  begining: 'beginning',
+  beleive: 'believe',
+  beleived: 'believed',
+  buisness: 'business',
+  calender: 'calendar',
+  catagory: 'category',
+  cemetary: 'cemetery',
+  changable: 'changeable',
+  cheif: 'chief',
+  collegue: 'colleague',
+  collegues: 'colleagues',
+  comming: 'coming',
+  commitee: 'committee',
+  completly: 'completely',
+  concious: 'conscious',
+  curiousity: 'curiosity',
+  definately: 'definitely',
+  definitly: 'definitely',
+  desparate: 'desperate',
+  diffrent: 'different',
+  dilema: 'dilemma',
+  disapoint: 'disappoint',
+  disapointed: 'disappointed',
+  embarass: 'embarrass',
+  embarassed: 'embarrassed',
+  enviroment: 'environment',
+  enviromental: 'environmental',
+  exagerate: 'exaggerate',
+  existance: 'existence',
+  experiance: 'experience',
+  familar: 'familiar',
+  finaly: 'finally',
+  foriegn: 'foreign',
+  fourty: 'forty',
+  forseeable: 'foreseeable',
+  freind: 'friend',
+  freinds: 'friends',
+  futher: 'further',
+  goverment: 'government',
+  grammer: 'grammar',
+  guarentee: 'guarantee',
+  guardien: 'guardian',
+  happend: 'happened',
+  harass: 'harass',
+  harrass: 'harass',
+  humourous: 'humorous',
+  ignorance: 'ignorance',
+  immediatly: 'immediately',
+  independant: 'independent',
+  intresting: 'interesting',
+  interupt: 'interrupt',
+  irresistable: 'irresistible',
+  knowlege: 'knowledge',
+  langauge: 'language',
+  liason: 'liaison',
+  libary: 'library',
+  lisence: 'license',
+  maintainance: 'maintenance',
+  millenium: 'millennium',
+  mischievious: 'mischievous',
+  neccessary: 'necessary',
+  necesary: 'necessary',
+  noticable: 'noticeable',
+  ocassion: 'occasion',
+  occassion: 'occasion',
+  occured: 'occurred',
+  occuring: 'occurring',
+  occurence: 'occurrence',
+  parliment: 'parliament',
+  pasttime: 'pastime',
+  perseverence: 'perseverance',
+  persistant: 'persistent',
+  politican: 'politician',
+  posession: 'possession',
+  prefered: 'preferred',
+  priviledge: 'privilege',
+  pronounciation: 'pronunciation',
+  publically: 'publicly',
+  realy: 'really',
+  recieve: 'receive',
+  recieved: 'received',
+  recieves: 'receives',
+  recieving: 'receiving',
+  recomend: 'recommend',
+  reccommend: 'recommend',
+  refered: 'referred',
+  religous: 'religious',
+  remeber: 'remember',
+  resistence: 'resistance',
+  responsability: 'responsibility',
+  rythm: 'rhythm',
+  secratary: 'secretary',
+  seige: 'siege',
+  senseable: 'sensible',
+  seperate: 'separate',
+  seperated: 'separated',
+  similer: 'similar',
+  sincerly: 'sincerely',
+  speach: 'speech',
+  studing: 'studying',
+  succesful: 'successful',
+  successfull: 'successful',
+  suprise: 'surprise',
+  suprised: 'surprised',
+  teh: 'the',
+  tendancy: 'tendency',
+  therefor: 'therefore',
+  threshhold: 'threshold',
+  tommorow: 'tomorrow',
+  tomorow: 'tomorrow',
+  tounge: 'tongue',
+  truely: 'truly',
+  unforseen: 'unforeseen',
+  unfortunatly: 'unfortunately',
+  untill: 'until',
+  usefull: 'useful',
+  wierd: 'weird',
+  wether: 'whether',
+  wich: 'which',
+  writting: 'writing',
+  writen: 'written',
+})
+
+/**
+ * Applies dictionary-based English spelling corrections.
+ * @param {string} text
+ * @param {import('@/domain/grammar/grammarTypes').RuleMatchLog[]} matchLogs
+ * @returns {string}
+ */
+export function applySpellingRules(text, matchLogs = []) {
+  return text.replace(/\b([A-Za-z]+)\b/g, (word) => {
+    const lower = word.toLowerCase()
+    const correctBase = SPELLING_DICTIONARY[lower]
+
+    if (!correctBase) {
+      return word
+    }
+
+    const corrected = matchCase(word, correctBase)
+    if (corrected !== word) {
+      matchLogs.push({
+        original: word,
+        replacement: corrected,
+        category: 'Spelling',
+        explanation: `Correct spelling of "${word}" is "${corrected}".`,
+      })
+    }
+
+    return corrected
+  })
+}
+
